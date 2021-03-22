@@ -2,7 +2,7 @@
 
 ### Quick summary
 
-This repository contains small excerpts of code from the internal CMS tool I'm currently developing at Inhance Digital. The files are separted by concern with respect to frontend or backend code. Large swaths of the codebase have been removed to keep this a succinct sample. I am a building this internal tool entirely as a solo developer at Inhance.
+This repository contains small excerpts of code from the internal CMS tool I'm currently developing at Inhance Digital. The files are separted by concern with respect to frontend or backend code. Large swaths of the codebase have been removed to keep this a succinct sample. I'm developing this app entirely as a solo developer at Inhance.
 
 ### What does the application do?
 
@@ -24,7 +24,7 @@ A live example of an experience populated by this CMS can be found here: https:/
 
 ## Frontend:
 
-State throughout our frontend is largely handled by Apollo Client caching. This allows our entire frontend to update dynamically dependent on what GraphQL queries each component depend on. I hope to implement fragments in the future alongside caching with cache.modify instead of refetchQueries.
+State throughout our frontend is largely handled by Apollo Client's local state management and clientside caching. This allows our entire frontend to update dynamically dependent on what GraphQL queries each component depends on. I hope to implement fragments in the future alongside caching with cache.modify instead of refetchQueries.
 
 In AppRouter.jsx, many of our routes are wrapped in the `<AuthRoute />` component, which is a render props that verifies a users' credentials based on the jwt token our backend sends to them on login. This allows us to lock out certain portions of the app to only admins or only authorized developers.
 
@@ -57,4 +57,4 @@ dashboardResolvers.js:
 
 ## Pipeline:
 
-This is a yml file that dictates our deployment script on PR into the master branch via Bitbucket Pipelines. Testing is done on staging and features branches. The app gets built into a Docker Image that is pushed up to Google Container Registry and deployed onto Google Cloud Run. Our Cloud Run instance passes its traffic through a static IP via a Custom VPC connected to a Cloud Router within Google Cloud Networking solutions. This allows the application to access to our MongoDB Cloud cluster via a whitelisted IP. Prior to my hiring, none of the projects at Inhance had any CI/CD pipelines of any sort. Building and testing was done manually and serverless deployments were only done through firebase. Now, more and more of our apps leverage containerization for flexible deployment and consistent development.
+This is a yml file that dictates our deployment script on PR into the master branch via Bitbucket Pipelines. Testing is done on staging and features branches. The app gets built into a Docker Image that is pushed up to Google Container Registry and deployed onto Google Cloud Run. Our Cloud Run instance passes its traffic through a static IP via a Custom VPC connected to a Cloud Router within Google Cloud Networking solutions. This allows the application to access our MongoDB Cloud cluster via a whitelisted IP. Prior to my hiring, none of the projects at Inhance had any CI/CD pipelines of any sort. Building and testing was done manually and serverless deployments were only done through firebase. Now, more and more of our apps leverage containerization for flexible deployment and consistent development.
