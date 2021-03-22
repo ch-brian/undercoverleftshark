@@ -1,0 +1,48 @@
+# enable Docker for your repository
+options:
+  docker: true
+
+definitions:
+  services:
+    docker:
+      memory: 3072
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build - Push - Deploy to GCP for Production
+          image: google/cloud-sdk:latest
+          caches:
+            - docker
+          deployment: production
+          script:
+            # creates .env file in root directory for process.env to access within the application - probably better ways of doing this
+            - echo "${APP_ENV}" | base64 --decode --ignore-garbage > .env
+            # creates the gcsIAM json file in root directory - look into incorporating auth using glcoud auth configure docker more closely
+            - echo "${GCS_IAM}" | base64 --decode --ignore-garbage > gcsIAM.json
+
+            - echo "${INHANCE_BITBUCKET_DEPLOY_GCP_SERVICEACC}" |  base64 --decode --ignore-garbage > /tmp/key-file.json
+
+            # set image name
+            - export IMAGE_NAME=gcr.io/veep-management-system/veepcms
+            - export SERVICE_NAME=veepcms
+
+            # Build image
+            - docker build -t $IMAGE_NAME .
+
+            # Gcloud auth and check
+            - gcloud auth activate-service-account bitbucket-pipeline@veep-management-system.iam.gserviceaccount.com --key-file /tmp/key-file.json
+            - gcloud config list
+
+            # config image registry with gcloud helper
+            - gcloud auth configure-docker -q
+
+            # push image to gcr
+            - docker push $IMAGE_NAME
+
+            # deploy to cloud run
+            - gcloud beta run deploy $SERVICE_NAME --image $IMAGE_NAME --region us-central1 --vpc-connector=mongo-connector --vpc-egress=all --platform managed --project veep-management-system
+
+            # Prayer to the Trade Gods - Go Lakers!
+            - echo "Alohalhololololololholaa."
