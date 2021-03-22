@@ -98,13 +98,16 @@ const dashboardResolvers = {
         experienceUUID,
         poiUUID,
         hotspotUUID,
+        mediaInput,
+      } = args;
+      const {
         mediaName,
         mediaDisplayName,
         mediaDisplayData,
         mediaType,
         mediaTag,
         mediaCustomFields,
-      } = args;
+      } = mediaInput;
       const fileArr = await file;
       const storage = new Storage({
         keyFileName: path.join(__dirname, '../../../gcsIAM.json'),
