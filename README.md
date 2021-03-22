@@ -2,7 +2,7 @@
 
 ### Quick summary
 
-This repository contains small excerpts of code from the internal CMS tool I'm currently developing at Inhance Digital. The files are separted by concern with respect to frontend or backend code. Large swaths of the codebase have been removed to keep this a succinct sample. I'm developing this app entirely as a solo developer at Inhance.
+This repository contains small excerpts of code from the internal CMS tool I'm currently developing at Inhance Digital. The files are separted by concern with respect to frontend or backend code. Large swaths of the codebase have been removed to keep this sample succinct. I'm developing this app entirely as a solo developer at Inhance.
 
 ### What does the application do?
 
