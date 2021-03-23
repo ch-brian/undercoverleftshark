@@ -226,9 +226,10 @@ const dashboardResolvers = {
               returnOriginal: false,
             }
           );
+        return associatedHotspotMedia;
       }
       // console.log('debug associated Hotspot: ', associatedHotspotMedia)
-      return associatedHotspotMedia;
+      return newGlobalMedia;
     },
     removeMediaFromHotspot: async (parent, args, context, info) => {
       const { experienceUUID, hotspotUUID, poiUUID, mediaUUID } = args;
